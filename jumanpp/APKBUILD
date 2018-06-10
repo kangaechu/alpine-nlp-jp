@@ -1,0 +1,36 @@
+# Contributor: kangaechu <kangae2@gmail.com>
+# Maintainer:
+pkgname=jumanpp
+pkgver=2.0.0
+pkgrel=rc2
+pkgdesc="A new morphological analyser that considers semantic plausibility of word sequences by using a RNNLM"
+url="https://github.com/ku-nlp/jumanpp"
+arch="all"
+license="BSD"
+depends=""
+makedepends="cmake libexecinfo libexecinfo-dev linux-headers"
+install=""
+subpackages=""
+source="https://github.com/ku-nlp/$pkgname/releases/download/v$pkgver-$pkgrel/$pkgname-$pkgver-$pkgrel.tar.xz assert.cc.patch::https://gist.githubusercontent.com/kangaechu/15c0cc2831f3c31cb6dfaeedd8e9414f/raw/3755f5832546bb93c1f920018edb90197e59d636/jumanpp-assert.cc.patch"
+builddir="$srcdir/"
+
+_builddir="$srcdir/${pkgname}-${pkgver}-${pkgrel}"
+prepare() {
+	cd "$_builddir"
+	patch -p0 < "$builddir"/assert.cc.patch || return 1
+}
+
+build() {
+	mkdir bld
+	cd bld
+	cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr || return 1
+}
+
+package() {
+	cd "$_builddir"
+	cd bld
+	make DESTDIR="$pkgdir" install -j1 || return 1
+}
+
+sha512sums="a10a79ad48127e07c6cd5c8cc48bc961ed54fbb6fcfe4c45aa70cf98039d51bad5278237775d88868acf67c28d6b22b2a3dbca856e4a42ca056d0f3e24e6ced3  jumanpp-2.0.0-rc2.tar.xz
+ea1439a39d91856d2d06a705b05eea6139f5d83b4574e4d0ade0680fb2c01833edcdb71fe5ff23ceaa60be42265cf9c9df7196c853093afde4d9f388ebd4f8b9  assert.cc.patch"

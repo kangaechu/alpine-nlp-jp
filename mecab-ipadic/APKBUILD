@@ -1,0 +1,31 @@
+# Contributor: kangaechu <kangae2@gmail.com>
+# Maintainer:
+pkgname=mecab-ipadic
+pkgver=2.7.0
+pkgrel="0"
+pkgdesc="MeCab: Yet Another Part-of-Speech and Morphological Analyzer IPADIC"
+url="http://taku910.github.io/mecab/"
+arch="all"
+license="BSD"
+depends="mecab"
+makedepends="mecab-dev"
+install=""
+#subpackages="$pkgname-dev $pkgname-doc"
+source="${pkgname}-${pkgver}.tar.gz::https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"
+builddir="$srcdir/"
+pkgsubver="20070801"
+
+_builddir="$srcdir/${pkgname}-${pkgver}-${pkgsubver}"
+
+build() {
+	cd "$_builddir"
+	./configure --with-charset=utf8 --prefix=/usr --sysconfdir=/etc || return 1
+	make || return 1
+}
+
+package() {
+	cd "$_builddir"
+	make DESTDIR="$pkgdir" install  || return 1
+}
+
+sha512sums="35ea662cb62f1967849f7ed5781bd6dafef0fe20d63e88d9a0057666e57ed23d5a0e6fb8d0701a0cc4da43a1050c1b02463bb862decc71c36b7fc2acdc158d86  mecab-ipadic-2.7.0.tar.gz"

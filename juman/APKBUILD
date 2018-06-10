@@ -1,0 +1,30 @@
+# Contributor: kangaechu <kangae2@gmail.com>
+# Maintainer:
+pkgname=juman
+pkgver=7.01
+pkgrel=0
+pkgdesc="JUMAN: a User-Extensible Morphological Analyzer for Japanese"
+url="http://nlp.ist.i.kyoto-u.ac.jp/EN/index.php?JUMAN"
+arch="all"
+license="modified BSD"
+depends=""
+makedepends=""
+install=""
+subpackages="$pkgname-dev"
+source="http://nlp.ist.i.kyoto-u.ac.jp/DLcounter/lime.cgi?down=http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/$pkgname/$pkgname-$pkgver.tar.bz2&name=$pkgname-$pkgver.tar.bz2"
+builddir="$srcdir/"
+
+_builddir="$srcdir/${pkgname}-${pkgver}"
+
+build() {
+	cd "$_builddir"
+	./configure --prefix=/usr --sysconfdir=/etc || return 1
+	make || return 1
+}
+
+package() {
+	cd "$_builddir"
+	make DESTDIR="$pkgdir" install  || return 1
+}
+
+sha512sums="d8d9934f89ed517d65d98c4f400b650dbca0348466a5714555b4075d43ec62f50ff18fe7d659323c7adb524827401bbe019c583e6e6254494b1153324d42e995  juman-7.01.tar.bz2&name=juman-7.01.tar.bz2"

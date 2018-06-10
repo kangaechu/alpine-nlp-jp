@@ -1,0 +1,30 @@
+# Contributor: kangaechu <kangae2@gmail.com>
+# Maintainer:
+pkgname=mecab
+pkgver=0.996
+pkgrel=0
+pkgdesc="MeCab: Yet Another Part-of-Speech and Morphological Analyzer"
+url="http://taku910.github.io/mecab/"
+arch="all"
+license="BSD"
+depends=""
+makedepends=""
+install=""
+subpackages="$pkgname-dev $pkgname-doc"
+source="${pkgname}-${pkgver}.tar.gz::https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE"
+builddir="$srcdir/"
+
+_builddir="$srcdir/${pkgname}-${pkgver}"
+
+build() {
+	cd "$_builddir"
+	./configure --enable-utf8-only --with-charset=utf8 --prefix=/usr --sysconfdir=/etc || return 1
+	make || return 1
+}
+
+package() {
+	cd "$_builddir"
+	make DESTDIR="$pkgdir" install  || return 1
+}
+
+sha512sums="aca6d16f411b9ba9b6687242246aeb28ede6d6c6a9122d4a32da9d8e76e79b5f4af2c8e3b13ad9462b34e9d2994cbd9bbbedebac45609684db9b703da999577f  mecab-0.996.tar.gz"
