@@ -41,7 +41,7 @@ https://qiita.com/SKAhack/items/0d2146305f569f09b96a
 
 ## Licence
 
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+MIT
 
 ## Author
 
